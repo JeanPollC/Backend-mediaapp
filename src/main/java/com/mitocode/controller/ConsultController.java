@@ -2,6 +2,8 @@ package com.mitocode.controller;
 
 import com.mitocode.dto.ConsultDTO;
 import com.mitocode.dto.ConsultListExamDto;
+import com.mitocode.dto.ConsultProcDTO;
+import com.mitocode.dto.FilterConsultDTO;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
 import com.mitocode.service.IConsultService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,7 +26,7 @@ public class ConsultController {
 
     private final IConsultService service;
 
-    @Qualifier("defaultMapper")
+    @Qualifier("consultMapper")
     private final ModelMapper modelMapper;
 
     @GetMapping
@@ -49,9 +52,6 @@ public class ConsultController {
         return ResponseEntity.created(location).build();
     }
 
-
-
-
     @PutMapping("/{id}")
     public ResponseEntity<Consult> update(@Valid @RequestBody ConsultDTO dto, @PathVariable Integer id) throws Exception{
         Consult obj = service.update(convertToEntity(dto), id);
@@ -67,6 +67,30 @@ public class ConsultController {
 
     public ResponseEntity<String> delete() {
         return ResponseEntity.ok("");
+    }
+
+    //////////////QUERYS/////////////////////
+
+    @PostMapping("/search/others")
+    public ResponseEntity<List<ConsultDTO>> searchOthers(@RequestBody FilterConsultDTO dto){
+        List<ConsultDTO> list = service.search(dto.getDni(), dto.getFullname()).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/search/dates")
+    public ResponseEntity<List<ConsultDTO>> searchByDates (
+        @RequestParam(value = "date1") String date1,
+        @RequestParam(value = "date2") String date2
+    ){
+        List<ConsultDTO> list = service.searchByDates(LocalDateTime.parse(date1), LocalDateTime.parse(date2)).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/getProcedureNative")
+    public ResponseEntity<List<ConsultProcDTO>> callProcedureNative(){
+        return ResponseEntity.ok(service.callProcedureOrFuntionNative());
     }
 
     private Consult convertToEntity(ConsultDTO dto) {

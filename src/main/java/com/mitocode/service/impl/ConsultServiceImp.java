@@ -1,5 +1,6 @@
 package com.mitocode.service.impl;
 
+import com.mitocode.dto.ConsultProcDTO;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
 import com.mitocode.repo.IConsultExamRepo;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,6 +33,22 @@ public class ConsultServiceImp extends CRUDImpl<Consult, Integer> implements ICo
         exams.forEach(ex -> ceRepo.saveExam(consult.getIdConsult(), ex.getIdExam()));
 
         return consult;
+    }
+
+    @Override
+    public List<Consult> search(String dni, String fullname) {
+        return consultRepo.search(dni, fullname);
+    }
+
+    @Override
+    public List<Consult> searchByDates(LocalDateTime date1, LocalDateTime date2) {
+        final int OFFSET_DAYS = 1;
+        return consultRepo.searchByDates(date1, date2.plusDays(OFFSET_DAYS));
+    }
+
+    @Override
+    public List<ConsultProcDTO> callProcedureOrFuntionNative() {
+        return consultRepo.callProcedureOrFuntionNative();
     }
 }
 

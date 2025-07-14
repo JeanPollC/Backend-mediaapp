@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class ConsultExamPK implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "id_cosult", nullable = false, foreignKey = @ForeignKey(name = "FK_CEPK_CONSULT"))
+    @JoinColumn(name = "id_consult", nullable = false, foreignKey = @ForeignKey(name = "FK_CEPK_CONSULT"))
     private Consult consult;
 
     @ManyToOne

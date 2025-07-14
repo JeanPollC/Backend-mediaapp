@@ -24,7 +24,7 @@ public class Consult {
     @ManyToOne
     @JoinColumn(name = "id_patient", nullable = false, foreignKey = @ForeignKey(name = "FK_CONSULT_PATIENT"))
     private Patient patient;
-
+ 
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_CONSULT_USER"))
     private User user;

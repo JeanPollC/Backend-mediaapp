@@ -31,7 +31,7 @@ public class Medic {
     @Column(nullable = false, length = 12)
     private String cmp;
 
-    @Column(length = 250)
+    @Column(length = 500)
     private String photoUrl;
 
 }
