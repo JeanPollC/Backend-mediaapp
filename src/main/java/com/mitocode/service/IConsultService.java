@@ -1,7 +1,7 @@
 package com.mitocode.service;
 
 import com.mitocode.dto.ConsultProcDTO;
-import com.mitocode.dto.ExamDTO;
+import com.mitocode.dto.IConsultProcDTO;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
 
@@ -16,6 +16,10 @@ public interface IConsultService extends ICRUD<Consult, Integer> {
 
     List<Consult> searchByDates(LocalDateTime date1, LocalDateTime date2);
 
-    List<ConsultProcDTO> callProcedureOrFuntionNative();
+    List<ConsultProcDTO> callProcedureOrFunctionNative();
+
+    List<IConsultProcDTO> callProcedureOrFunctionProjection();
+
+    byte[] generateReport() throws Exception;
 
 }

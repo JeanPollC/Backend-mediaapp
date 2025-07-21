@@ -1,18 +1,27 @@
 package com.mitocode.service.impl;
 
 import com.mitocode.dto.ConsultProcDTO;
+import com.mitocode.dto.IConsultProcDTO;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
 import com.mitocode.repo.IConsultExamRepo;
 import com.mitocode.repo.IConsutRepo;
 import com.mitocode.repo.IGenericRepo;
 import com.mitocode.service.IConsultService;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -47,21 +56,26 @@ public class ConsultServiceImp extends CRUDImpl<Consult, Integer> implements ICo
     }
 
     @Override
-    public List<ConsultProcDTO> callProcedureOrFuntionNative() {
+    public List<ConsultProcDTO> callProcedureOrFunctionNative() {
         return consultRepo.callProcedureOrFuntionNative();
     }
+
+    @Override
+    public List<IConsultProcDTO> callProcedureOrFunctionProjection() {
+        return consultRepo.callProcedureOrFuntionProjection();
+    }
+
+    @Override
+    public byte[] generateReport() throws Exception {
+        byte[] data = null;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("txt_title", "MEDIAPP REPORT");
+
+        File file = new ClassPathResource("/reports/consultas.jasper").getFile();
+        JasperPrint print = JasperFillManager.fillReport(file.getPath(), params, new JRBeanCollectionDataSource(callProcedureOrFunctionNative()));
+        data = JasperExportManager.exportReportToPdf(print);
+
+        return data;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

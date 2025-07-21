@@ -1,6 +1,7 @@
 package com.mitocode.repo;
 
 import com.mitocode.dto.ConsultProcDTO;
+import com.mitocode.dto.IConsultProcDTO;
 import com.mitocode.model.Consult;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,5 +20,8 @@ public interface IConsutRepo extends IGenericRepo<Consult, Integer> {
 
     @Query(value = "SELECT * FROM fn_list();", nativeQuery = true)
     List<ConsultProcDTO> callProcedureOrFuntionNative();
+
+    @Query(value = "SELECT * FROM fn_list();", nativeQuery = true)
+    List<IConsultProcDTO> callProcedureOrFuntionProjection();
 
 }

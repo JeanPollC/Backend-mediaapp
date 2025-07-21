@@ -1,9 +1,6 @@
 package com.mitocode.controller;
 
-import com.mitocode.dto.ConsultDTO;
-import com.mitocode.dto.ConsultListExamDto;
-import com.mitocode.dto.ConsultProcDTO;
-import com.mitocode.dto.FilterConsultDTO;
+import com.mitocode.dto.*;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
 import com.mitocode.service.IConsultService;
@@ -11,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -90,7 +88,17 @@ public class ConsultController {
 
     @GetMapping("/getProcedureNative")
     public ResponseEntity<List<ConsultProcDTO>> callProcedureNative(){
-        return ResponseEntity.ok(service.callProcedureOrFuntionNative());
+        return ResponseEntity.ok(service.callProcedureOrFunctionNative());
+    }
+
+    @GetMapping("/getProcedureProjection")
+    public ResponseEntity<List<IConsultProcDTO>> callProcedureProjection() {
+        return ResponseEntity.ok(service.callProcedureOrFunctionProjection());
+    }
+
+    @GetMapping(value = "/generateReport", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> generateReport() throws Exception{
+        return ResponseEntity.ok(service.generateReport());
     }
 
     private Consult convertToEntity(ConsultDTO dto) {
