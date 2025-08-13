@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class ConsultServiceImp extends CRUDImpl<Consult, Integer> implements IConsultService {
+public class ConsultServiceImpl extends CRUDImpl<Consult, Integer> implements IConsultService {
 
     private final IConsutRepo consultRepo;
     private final IConsultExamRepo ceRepo;

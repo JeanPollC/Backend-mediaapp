@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MedicServiceImp extends CRUDImpl<Medic, Integer> implements IMedicService {
+public class MedicServiceImpl extends CRUDImpl<Medic, Integer> implements IMedicService {
 
     private final IMedicRepo repo;
 

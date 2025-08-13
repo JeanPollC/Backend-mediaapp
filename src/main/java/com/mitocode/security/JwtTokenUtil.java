@@ -26,7 +26,7 @@ public class JwtTokenUtil implements Serializable {
 
     @Value("${jwt.secret}") //Expression language ${}
     private String secret;
-
+    
     public String generateToken(UserDetails userDatails){
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", userDatails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));//ADMIN,USER,DBA

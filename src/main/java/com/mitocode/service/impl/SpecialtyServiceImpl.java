@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SpecialtyServiceImp extends CRUDImpl<Specialty, Integer> implements ISpeacialtyService {
+public class SpecialtyServiceImpl extends CRUDImpl<Specialty, Integer> implements ISpeacialtyService {
 
     private final ISpecialtyRepo repo;
 

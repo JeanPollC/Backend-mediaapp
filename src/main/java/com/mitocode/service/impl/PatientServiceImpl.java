@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PatientServiceImp extends CRUDImpl<Patient, Integer> implements IPatientService {
+public class PatientServiceImpl extends CRUDImpl<Patient, Integer> implements IPatientService {
 
     //@Autowired
     private final IPatientRepo repo;
